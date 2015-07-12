@@ -35,3 +35,8 @@ header, nav, section, footer {
 nav span {
 	margin:0 0.625rem 0 0;
 }
+
+p img {
+	width:6.250rem;
+	height:6.250rem;
+}
