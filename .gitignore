@@ -46,3 +46,4 @@ Temporary Items
 # Project specifics
 node_modules
 npm-debug.log
+quiz.sqlite
