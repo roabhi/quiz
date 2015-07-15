@@ -40,3 +40,14 @@ p img {
 	width:6.250rem;
 	height:6.250rem;
 }
+
+/*
+
+Table styles
+
+*/
+
+table {
+	width:100%;
+	text-align:center;
+}
