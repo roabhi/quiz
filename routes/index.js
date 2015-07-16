@@ -8,6 +8,9 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz' });
 });
 
+//autoload de comandos con :quizId
+router.param('quizId', quizController.load); //Autoload :quizId
+
 //Definición de routas de /quizes
 router.get('/quizes', quizController.index);
 router.get('/quizes/:quizId(\\d+)', quizController.show);
