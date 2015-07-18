@@ -21,10 +21,39 @@ exports.load =  function(req, res, next, quizId) {
 //Get /quizes
 exports.index = function(req,res) {
 	
-	models.Quiz.findAll().then(	
+
+	if(req.query.search) { //la petición contiene una busqueda - Ejericion obligatorio modulo 7
+		
+		console.log('query has search and is ' + req.query.search); // Muestra por consola la busqueda
+		
+		var search = req.query.search; // pasa la busqueda a var
+      	search = search.split(" ").join('%'); //sustituye espacios
+		search = '%' + search + '%'; //encapsula en %
+	
+		console.log('search normalizado es ' + search); //muestra por consola que la busqueda se ha normalizado para ser trazada en la BD		
+		
+		models.Quiz.findAll({where: ["lower(pregunta) like lower(?)", search], order: 'pregunta ASC'}).then(	// Usa minúsculas y orderna de manera ascendente
+		function(quizes) {
+			
+			console.log('quizes are ' + quizes); //muestra por consola los objetos encontrados
+			
+			res.render('quizes/index.ejs', {quizes : quizes}); //renderiza index pero sólo con los matches
+		}).catch(function(error) {next(error);})
+		
+
+	}else { // la peticion NO tiene busqueda
+	
+		console.log('query has NO search');
+		
+		models.Quiz.findAll().then(	
 		function(quizes) {
 			res.render('quizes/index.ejs', {quizes : quizes});
-	}).catch(function(error) {next(error);})
+		}).catch(function(error) {next(error);})
+	
+	}
+	
+	
+	
 	
 };
 
