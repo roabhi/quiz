@@ -5,7 +5,7 @@ var quizController = require('../controllers/quiz_controller');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Quiz' });
+  res.render('index', { title: 'Quiz', errors : [] }); //pasamos ademas por defecto a la vista un posible array de errores de validación paso 12
 });
 
 //autoload de comandos con :quizId
@@ -19,7 +19,7 @@ router.get('/quizes/new', quizController.new);
 router.post('/quizes/create', quizController.create);
 
 router.get('/author', function(req, res){
-	res.render('author', { title:'Quiz - Creditos'})
+	res.render('author', { title:'Quiz - Creditos', errors : [] })
 });//enroutador de créditos
 
 
