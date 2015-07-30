@@ -52,6 +52,12 @@ table {
 	text-align:center;
 }
 
+table td.tema {
+	color:#f61;
+	font-size:smaller;
+	text-transform:Capitalize;
+}
+
 #ErrorMsgs {
 	padding:0;
 	margin:0;
