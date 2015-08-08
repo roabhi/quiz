@@ -10,8 +10,13 @@
 	</head>
 	<body>
 		<div id="page-wrap">
-			<header class="main" id="h1">	
+			<header class="main" id="h1">							
 				<h2>Quiz: <span>el juego de las preguntas<span></h2>
+				<% if(!session.user) { %>
+          			<span class="right"><a href="/login">Login</a></span>
+        		<% }else { %>
+          			<span class="right"><%=session.user.username%>&mdash;<a href="/logout">Logout</a></span>
+        		<% } %>	
 			</header>
 			<nav class="main" id="n1" role="navigation">
 				<span><a href="/">Inicio</a></span>
@@ -34,12 +39,5 @@
 				<span><a href="https://github.com/roabhi/quiz" target="_blank"	>Proyecto en GitHub</a></span>
 			</footer>			
 		</div>
-		<!--<script type="text/javascript">
-			document.addEventListener('DOMContentLoaded', function(e){			
-			
-			document.location.pathname === '/' ? alert('Este deploy está basado en el Ejercicio P2P obligatorio del Módulo 8 del temario. Si estás corregiendo la entrega del módulo 7 con este deploy puedes ADEMÁS añadir, editar o borrar preguntas. También puedes seleccionar un tema para cada pregunta entre una lista de temas predefinidos.') : null;
-		
-			}, false);
-		</script>-->
 	</body>	
 </html>

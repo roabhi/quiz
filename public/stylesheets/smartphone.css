@@ -18,3 +18,14 @@ input, footer {
 .rem {
 	display:none;
 }
+
+span.right {
+	visibility:hidden;
+	font-size:small;
+	top:2rem;
+}
+
+span.right a {
+	visibility:visible !important;
+	
+}

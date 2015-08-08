@@ -32,8 +32,18 @@ header, nav, section, footer {
 	text-align:center;
 }
 
+header h1 {
+	position:relative;
+}
+
 nav span {
 	margin:0 0.625rem 0 0;
+}
+
+span.right {
+	position:absolute;
+	right:1rem;
+	top:1rem;
 }
 
 p img {

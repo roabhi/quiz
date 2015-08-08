@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
+var session = require('express-session');
 
 var routes = require('./routes/index');
 //var users = require('./routes/users');
@@ -24,9 +25,23 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // Modulo 8.1 false a true
-app.use(cookieParser());
+app.use(cookieParser('Quiz 2015'));
+app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Helpers Dinámicos:
+app.use(function(req, res, next) {
+
+  // Guardar Path en session.redir para despues de login
+  if (!req.path.match(/\/login|\/logout/)) {
+    req.session.redir = req.path;
+  }
+
+  // Hacer visible req.session en las vistas
+  res.locals.session = req.session;
+  next();
+});
 
 app.use('/', routes);
 //app.use('/users', users);
@@ -39,7 +54,6 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
