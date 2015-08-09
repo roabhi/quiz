@@ -10,8 +10,13 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz', errors : [] }); //pasamos ademas por defecto a la vista un posible array de errores de validación paso 12
 });
 
+router.get('/author', function(req, res){
+	res.render('author', { title:'Quiz - Creditos', errors : [] })
+});//enroutador de créditos
+
 //autoload de comandos con :quizId
 router.param('quizId', quizController.load); //Autoload :quizId
+router.param('commentId', commentController.load); //Autoload :commentId
 
 //Definición de rutas de sesión
 router.get('/login', sessionController.new); //formulario login
@@ -28,12 +33,9 @@ router.get('/quizes/:quizId(\\d+)/edit', sessionController.loginRequired, quizCo
 router.put('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.update);
 router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.destroy);
 
+//Definición de rutas de comentarios
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
-
-router.get('/author', function(req, res){
-	res.render('author', { title:'Quiz - Creditos', errors : [] })
-});//enroutador de créditos
-
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.loginRequired, commentController.publish);
 
 module.exports = router;
