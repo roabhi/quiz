@@ -1,4 +1,4 @@
-var express = require('express');
+﻿var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -47,6 +47,29 @@ app.use(function(req, res, next) {
   // Hacer visible req.session en las vistas
   res.locals.session = req.session;
   next();
+});
+
+//Auto-Logout
+app.use(function(req, res, next) {
+  
+if (req.session.user) { //Si estmamos logeados - existe user
+    
+	var max = 120000; // 2 * 60 * 1000 => 2 minutos x 60 segundos x 1000 milisegundos
+    var rightNow = (new Date()).getTime(); //Guarda el tiempo actual en cada transaccion
+    if (!req.session.timestamp) { //Si no existe timestamp en session
+      req.session.timestamp = rightNow; //crea timestamp en session con el valor de rightNow
+    } else { //Si ya existe
+      if (rightNow - req.session.timestamp > max) { //Si el valor de rightNow menos el tiempo acumulado desde la última transaccion es mayor que max (2 minutos)
+        delete req.session.timestamp; //Borra la variable que guarda el tiempo actual
+		delete req.session.user; //Borra la sesión     
+		console.log('Logout por inactividad'); //Prompt cierre de session		
+      } else {
+        req.session.timestamp = rightNow; //Si no hemos llegado al máximo de inactividad cambia timestamp por el nuevo valor de rightNow
+      }
+    }
+  } 
+  
+  next(); //Siguiente 
 });
 
 app.use('/', routes);
